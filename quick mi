@@ -1,11 +1,24 @@
-int qmi(int m,int k,int p)
-{
-  int res = 1,t = m;
-  while (k)
-  { 
-    if (k&1) res=res * t % p;
-    t =t * t % p;
-    k >>= 1;
-  }
-  return res;
+#include <iostream>
+#include <cstdio>
+
+using namespace std;
+
+int mi(int a, int b) {
+	int tmp = a,  H= 1;
+	while (b) {
+		if (b & 1)
+		{
+			H *= tmp;
+		}
+		tmp *= tmp;
+		b >>= 1;
+	}
+	return H;
+}
+
+int main() {
+	int a, b;
+	cin >> a >> b;
+	cout << mi(a,b) << endl;
+	return 0;
 }
