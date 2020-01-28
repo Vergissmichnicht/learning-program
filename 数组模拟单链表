@@ -1,0 +1,81 @@
+#include<iostream>
+using namespace std;
+
+const int N = 1e6 + 10;
+int head, e[N], idx,k;
+int ne[N];
+
+
+
+//head表示头节点的下表；
+//e[i]表示节点i的值
+//ne[i]表示节点i的next指针
+//idx表示当前指向的位置
+void init()
+{
+	head = -1;
+	idx = 0;
+}
+
+//插入到头部
+void add_to_head(int x) {
+	e[idx] = x;//把x赋给当前的点
+	ne[idx] = head;//让当前的点指向head所指的位置（第一个）
+	head = idx;//	head再指向这个点
+	idx++;//yeah!
+}
+
+//插入到k后边
+void add (int k, int x)
+{
+	e[idx] = x;
+	ne[idx] = ne[k];
+	ne[k] = idx;
+	idx++;
+}
+
+//删掉k后面的点
+void  del(int k)
+{
+	ne[k] = ne[ne[k]];//套娃
+}
+
+
+
+ 
+int main()
+{
+	init();
+	int m;
+	cin >> m;
+	
+	while (m--)
+	{
+		int  x;
+		char op;
+		cin >> op;
+
+		if (op == 'H')
+		{
+			cin >> x;
+			add_to_head(x);
+		}
+		else if (op == 'D')
+		{
+			cin >> k;
+			if (!k) head = ne[head];
+			del(k-1);
+		}
+		else
+		{
+			cin >> k >> x;
+			add(k-1, x);
+		}
+
+	}
+
+
+	for (int i = head; i != -1; i = ne[i])  cout << e[i] << " ";
+	cout << endl;
+  	return 0;
+}
